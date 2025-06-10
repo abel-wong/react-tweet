@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { getTweet } from './api/index.js'
+import { getTweet, SimpleUserInfo } from './api/index.js'
 import {
   EmbeddedTweet,
   TweetNotFound,
@@ -13,6 +13,26 @@ import type { TweetProps } from './swr.js'
 export type { TweetProps }
 
 type TweetContentProps = Omit<TweetProps, 'fallback'>
+
+// 添加用户信息获取函数
+async function getUserInfo(
+  username: string
+): Promise<SimpleUserInfo | undefined> {
+  try {
+    const res = await fetch(
+      `https://debot.ai/api/v1/nitter/userInfo/query?username=${username}`
+    )
+    const json = await res.json()
+    return {
+      created_at: json.profileInfo.created_at,
+      followers_count: json.profileInfo.followers_count,
+      screen_name: json.profileInfo.screen_name,
+    }
+  } catch (error) {
+    console.error('Failed to fetch user info:', error)
+    return undefined
+  }
+}
 
 const TweetContent = async ({
   id,
@@ -36,8 +56,13 @@ const TweetContent = async ({
     const NotFound = components?.TweetNotFound || TweetNotFound
     return <NotFound error={error} />
   }
+  const userInfo = tweet?.user?.screen_name
+    ? await getUserInfo(tweet.user.screen_name)
+    : undefined
 
-  return <EmbeddedTweet tweet={tweet} components={components} />
+  return (
+    <EmbeddedTweet tweet={tweet} userInfo={userInfo} components={components} />
+  )
 }
 
 export const Tweet = ({

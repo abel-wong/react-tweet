@@ -8,7 +8,7 @@ import {
   type TwitterComponents,
 } from './twitter-theme/components.js'
 import { type TweetCoreProps } from './utils.js'
-import { useTweet } from './hooks.js'
+import { useTweet, useUserInfo } from './hooks.js'
 
 export type TweetProps = Omit<TweetCoreProps, 'id'> & {
   fallback?: ReactNode
@@ -34,6 +34,11 @@ export const Tweet = ({
   onError,
 }: TweetProps) => {
   const { data, error, isLoading } = useTweet(id, apiUrl, fetchOptions)
+  const {
+    data: userInfo,
+    error: userInfoError,
+    isLoading: userInfoLoading,
+  } = useUserInfo(data?.user?.screen_name || '')
 
   if (isLoading) return fallback
   if (error || !data) {
@@ -41,5 +46,7 @@ export const Tweet = ({
     return <NotFound error={onError ? onError(error) : error} />
   }
 
-  return <EmbeddedTweet tweet={data} components={components} />
+  return (
+    <EmbeddedTweet tweet={data} userInfo={userInfo} components={components} />
+  )
 }

@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import swr from 'swr'
-import { type Tweet, TwitterApiError } from './api/index.js'
+import {
+  SimpleUserInfo,
+  type Tweet,
+  TwitterApiError,
+  UserInfo,
+} from './api/index.js'
 
 // Avoids an error when used in the pages directory where useSWR might be in `default`.
 const useSWR = ((swr as any).default as typeof swr) || swr
@@ -24,6 +29,15 @@ async function fetcher([url, fetchOptions]: [
     data: json,
     status: res.status,
   })
+}
+async function userInfoFetcher(url: string): Promise<SimpleUserInfo> {
+  const res = await fetch(url)
+  const json = await res.json()
+  return {
+    created_at: json.profileInfo.created_at,
+    followers_count: json.profileInfo.followers_count,
+    screen_name: json.profileInfo.screen_name,
+  }
 }
 
 /**
@@ -54,6 +68,20 @@ export const useTweet = (
     data,
     error,
   }
+}
+export const useUserInfo = (username: string) => {
+  const { data, error, isLoading } = useSWR<SimpleUserInfo>(
+    username
+      ? `https://debot.ai/api/v1/nitter/userInfo/query?username=${username}`
+      : null,
+    userInfoFetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      shouldRetryOnError: false,
+    }
+  )
+  return { data, error, isLoading }
 }
 
 export const useMounted = () => {

@@ -1,8 +1,10 @@
 {
-  "repository": "https://github.com/vercel-labs/react-tweet.git",
+  "name": "@abel_wong/react-tweet",
+  "version": "1.0.0",
+  "repository": "https://github.com/abel-wong/react-tweet.git",
   "license": "MIT",
   "private": true,
-  "author": "Luis Alvarez (https://twitter.com/luis_fades)",
+  "author": "Abel-Wong",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",

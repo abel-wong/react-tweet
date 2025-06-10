@@ -1,8 +1,8 @@
 {
-  "name": "react-tweet",
-  "version": "3.2.2",
-  "repository": "https://github.com/vercel-labs/react-tweet.git",
-  "author": "Luis Alvarez (https://twitter.com/luis_fades)",
+  "name": "@abel_wong/react-tweet",
+  "version": "1.0.0",
+  "repository": "https://github.com/abel-wong/react-tweet.git",
+  "author": "Abel-Wong",
   "scripts": {
     "build": "pnpm build:swc && pnpm types",
     "build:swc": "swc src -d dist --copy-files",

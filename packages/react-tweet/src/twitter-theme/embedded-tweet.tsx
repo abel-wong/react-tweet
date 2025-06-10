@@ -1,4 +1,4 @@
-import type { Tweet } from '../api/index.js'
+import type { SimpleUserInfo, Tweet, UserInfo } from '../api/index.js'
 import type { TwitterComponents } from './types.js'
 import { TweetContainer } from './tweet-container.js'
 import { TweetHeader } from './tweet-header.js'
@@ -11,18 +11,22 @@ import { TweetReplies } from './tweet-replies.js'
 import { QuotedTweet } from './quoted-tweet/index.js'
 import { enrichTweet } from '../utils.js'
 import { useMemo } from 'react'
+import { TweetUserInfo } from './tweet-user-info.js'
 
 type Props = {
   tweet: Tweet
   components?: Omit<TwitterComponents, 'TweetNotFound'>
+  userInfo?: SimpleUserInfo | undefined
 }
 
-export const EmbeddedTweet = ({ tweet: t, components }: Props) => {
+export const EmbeddedTweet = ({ tweet: t, userInfo, components }: Props) => {
   // useMemo does nothing for RSC but it helps when the component is used in the client (e.g by SWR)
   const tweet = useMemo(() => enrichTweet(t), [t])
+
   return (
     <TweetContainer>
       <TweetHeader tweet={tweet} components={components} />
+      <TweetUserInfo userInfo={userInfo} />
       {tweet.in_reply_to_status_id_str && <TweetInReplyTo tweet={tweet} />}
       <TweetBody tweet={tweet} />
       {tweet.mediaDetails?.length ? (

@@ -21,6 +21,8 @@
   /* Info */
   --tweet-info-font-size: 0.9375rem;
   --tweet-info-line-height: 1.25rem;
+  --tweet-info-font-weight: 700;
+  --tweet-info-icon-size: 1.25em;
 
   /* Actions like the like, reply and copy buttons */
   --tweet-actions-font-size: 0.875rem;

@@ -1,0 +1,44 @@
+.tweetUserInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-wrap: break-word;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  border-bottom: var(--tweet-border);
+  text-overflow: ellipsis;
+  color: var(--tweet-font-color-secondary);
+}
+.joined,
+.followers {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  margin-right: 1.25rem;
+}
+.joinedIcon {
+  height: var(--tweet-info-icon-size);
+  fill: currentColor;
+  user-select: none;
+}
+
+.userInfoWrapper {
+  width: var(--tweet-actions-icon-wrapper-size);
+  height: var(--tweet-actions-icon-wrapper-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -0.25rem;
+  border-radius: 9999px;
+}
+.followersCount {
+  font-size: var(--tweet-actions-font-size);
+  font-weight: 700;
+  line-height: 1.25rem;
+  margin-right: 0.25rem;
+  color: #e7e9ea;
+}
+.followersText {
+  font-size: var(--tweet-actions-font-size);
+}
