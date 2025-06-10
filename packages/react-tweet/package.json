@@ -33,10 +33,10 @@
   "typesVersions": {
     "*": {
       "index": [
-        "src/index"
+        "dist/index.d.ts"
       ],
       "api": [
-        "src/api/index"
+        "dist/api/index.d.ts"
       ],
       "*": []
     }
