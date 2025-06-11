@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build && pnpm publish -r"
+    "release": "turbo run build && pnpm publish -r",
+    "publish-package": "chmod +x scripts/publish.sh && ./scripts/publish.sh"
   },
   "prettier": {
     "semi": false,

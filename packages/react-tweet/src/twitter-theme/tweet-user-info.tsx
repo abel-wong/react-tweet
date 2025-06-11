@@ -12,15 +12,25 @@ export const TweetUserInfo = ({ userInfo }: { userInfo?: SimpleUserInfo }) => {
 
   const isValidDate = createdAt && !isNaN(createdAt.getTime())
   const formattedCreatedAtDate = isValidDate ? formatDateOnly(createdAt) : '-'
-  const followersCount = userInfo ? formatNumber(userInfo.followers_count) : '-'
+  const followersCount = (() => {
+    if (!userInfo) return '-'
+    if (typeof userInfo.followers_count !== 'number') return '-'
+    if (userInfo.followers_count < 0) return '-'
+    if (userInfo.followers_count === 0) return '0' // 如果确实是 0，显示 0
+    return formatNumber(userInfo.followers_count)
+  })()
+  const hasScreenName =
+    userInfo?.screen_name && userInfo.screen_name.trim() !== ''
 
   return (
     <div className={s.tweetUserInfo}>
       <a
         className={s.joined}
-        href={`https://x.com/${userInfo?.screen_name}`}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={
+          hasScreenName ? `https://x.com/${userInfo.screen_name}` : undefined
+        }
+        target={hasScreenName ? '_blank' : undefined}
+        rel={hasScreenName ? 'noopener noreferrer' : undefined}
         aria-label={``}
       >
         <div className={s.userInfoWrapper}>
@@ -36,9 +46,11 @@ export const TweetUserInfo = ({ userInfo }: { userInfo?: SimpleUserInfo }) => {
       </a>
       <a
         className={s.followers}
-        href={`https://x.com/${userInfo?.screen_name}`}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={
+          hasScreenName ? `https://x.com/${userInfo.screen_name}` : undefined
+        }
+        target={hasScreenName ? '_blank' : undefined}
+        rel={hasScreenName ? 'noopener noreferrer' : undefined}
         aria-label={``}
       >
         <span className={s.followersCount}>{followersCount}</span>
