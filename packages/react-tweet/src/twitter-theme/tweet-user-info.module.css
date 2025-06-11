@@ -17,6 +17,9 @@
   align-items: center;
   margin-right: 1.25rem;
 }
+.joinedTime {
+  font-size: var(--tweet-actions-font-size);
+}
 .joinedIcon {
   height: var(--tweet-info-icon-size);
   fill: currentColor;

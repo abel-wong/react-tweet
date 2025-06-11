@@ -4,7 +4,11 @@ import { type EnrichedTweet, formatNumber } from '../utils.js'
 import s from './tweet-user-info.module.css'
 
 export const TweetUserInfo = ({ userInfo }: { userInfo?: SimpleUserInfo }) => {
-  const createdAt = userInfo ? new Date(userInfo.created_at) : null
+  const createdAt =
+    userInfo?.created_at && userInfo.created_at.trim() !== ''
+      ? new Date(userInfo.created_at)
+      : null
+  const isValidDate = createdAt && !isNaN(createdAt.getTime())
   const formattedCreatedAtDate = createdAt ? formatDate(createdAt) : '-'
   const followersCount = userInfo ? formatNumber(userInfo.followers_count) : '-'
 
