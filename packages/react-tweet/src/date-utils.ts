@@ -30,3 +30,12 @@ export const formatDate = (date: Date) => {
   const formattedDate = `${parts.month} ${parts.day}, ${parts.year}`
   return `${formattedTime} · ${formattedDate}`
 }
+export const formatDateOnly = (date: Date) => {
+  const options: Intl.DateTimeFormatOptions = {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }
+
+  return new Intl.DateTimeFormat('en-US', options).format(date)
+}
